@@ -1,14 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User, UserAPIUSerOne } from '../../projects/shared/src/lib/user.interfaces';
+import {
+  User,
+  UserAPIUSerOne,
+} from '../../projects/shared/src/lib/user.interfaces';
 import { Alert } from '../../projects/ui/src/lib/alert/alert.interface';
 import { Router } from '@angular/router';
 
-const USER_API = 'http://localhost:3000/api/user'
+const USER_API = 'https://codingfactory.ddns.net/api/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppService {
   private loggedInSubject = new BehaviorSubject<boolean>(false);
@@ -20,30 +23,35 @@ export class AppService {
   private loggedInUsername = new BehaviorSubject<string>('');
   loggedInUsername$ = this.loggedInUsername.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {};
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string) {
-    this.http.get<UserAPIUSerOne>(`${USER_API}/findOne/${username}`)
-    .subscribe((user) => {this.loggedInSubject.next(user.data.password === password);
+    this.http
+      .get<UserAPIUSerOne>(`${USER_API}/findOne/${username}`)
+      .subscribe((user) => {
+        this.loggedInSubject.next(user.data.password === password);
 
-    this.loggedInUserFullnameSubject.next(
-      `${user.data.name} ${user.data.surname}`
-    );
+        this.loggedInUserFullnameSubject.next(
+          `${user.data.name} ${user.data.surname}`
+        );
 
-    this.loggedInUsername.next(
-      `${user.data.username}`
-    )
-    
-    console.log(this.loggedInUsername.getValue() + this.loggedInUserFullnameSubject);
-    });
-   
+        this.loggedInUsername.next(`${user.data.username}`);
+
+        console.log(
+          this.loggedInUsername.value + this.loggedInUserFullnameSubject.value
+        );
+      });
+  }
+
+  getLoggedInUserName() {
+    return this.loggedInUsername.value;
   }
 
   logout() {
     this.loggedInSubject.next(false);
     this.loggedInUserFullnameSubject.next('');
     this.loggedInUsername.next('');
-    this.router.navigate
+    this.router.navigate;
   }
 
   alerts: Alert[] = [];
@@ -52,8 +60,7 @@ export class AppService {
     this.alerts.push(alert);
   }
 
-  alertDismiss(index: number)  {
-    this.alerts.splice(index, 1)
+  alertDismiss(index: number) {
+    this.alerts.splice(index, 1);
   }
-
 }

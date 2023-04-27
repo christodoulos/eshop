@@ -13,19 +13,21 @@ import { MyProductsComponent } from './my-products/my-products.component';
 const routes: Routes = [
   { path: 'list', component: ProductsListComponent },
   { path: 'insert', component: ProductInsertComponent },
-  { path: 'myProducts', component: MyProductsComponent}
-]
+  { path: 'myProducts', component: MyProductsComponent },
+];
 
 @NgModule({
   declarations: [
     ProductInsertComponent,
-    ProductsListComponent
+    ProductsListComponent,
+    MyProductsComponent,
   ],
   imports: [
-    CommonModule, RouterModule.forChild(routes), HttpClientModule, ReactiveFormsModule
+    CommonModule,
+    RouterModule.forChild(routes),
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
-  providers: [
-    ProductService
-  ]
+  providers: [ProductService],
 })
-export class ProductsModule { }
+export class ProductsModule {}

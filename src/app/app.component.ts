@@ -20,19 +20,18 @@ export class AppComponent {
   productsMenu: MenuItem[] = [
     { text: 'List all Products', link: 'product/list' },
     { text: 'Insert a Product', link: 'product/insert' },
-    { text: 'View my Products', link: 'myProducts'},
+    { text: 'View my Products', link: 'product/myProducts' },
     { text: 'Update a Product', link: 'not-implemented-yet' },
   ];
-   
+
   isLoggedIn$ = this.service.isLoggedIn$;
   loggedInUserFullname$ = this.service.loggedInUserFullname$;
-  
+
   loggedInUsername$ = this.service.loggedInUsername$;
 
-  constructor(private service: AppService){};
-  
+  constructor(private service: AppService) {}
+
   logout() {
     this.service.logout();
   }
-
 }
